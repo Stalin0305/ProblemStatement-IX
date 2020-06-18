@@ -4,6 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var date=require('date-time');
+var shortid=require('shortid');
 var dbs;
 var MongoClient=require('mongodb').MongoClient;
 var ObjectId= require('mongodb').ObjectID;
@@ -64,6 +65,23 @@ app.get('/xyz/update',function(req,res){
 });
 
 
+app.post('/xyz/update',function(req,res){
+  var editProdID=req.body.prodId;
+  res.redirect('/xyz/edit/'+editProdID);
+});
+
+app.get('/xyx/edit/:id',function(req,res){
+  var id=req.params.id;
+  console.log(id);
+  dbs.collection('Products').findOne({_id: ObjectId(id)}).toArray(function(e,r){
+    if(e) console.log(e);
+    if(r==null) 
+    { console.log("Invalid id");}
+    res.render("editForm",{product:r});
+
+  });
+  
+})
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
