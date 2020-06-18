@@ -1,0 +1,26 @@
+<%- include('partials/header') %>
+
+<div class="centerForm">
+    <form action="/xyz" method="POST">
+        <h2 class="formDiv">New Product</h2>
+        <div class="form-group formDiv">
+            <label for="titlexyz">Enter the name of the Product</label>
+            <input type="text" class="form-control" id="titlexyz" name="Prodtitle" required placeholder="Title">
+        </div>
+        <div class="form-group formDiv">
+            <label for="imagexyz">Add the image url</label>
+            <input type="text" class="form-control" id="imagexyz" name="Prodimage" required placeholder="Image url">
+        </div>
+        <div class="form-group formDiv">
+            <label for="bodyxyz">Enter the description</label><br>
+            <!-- <input type="text" class="form-control" name="blogbody" id="bodyblog" maxlength="300"> -->
+            <textarea name="Prodbody" id="bodyblog" class="form-control" cols="30" required rows="7"></textarea>
+        </div>
+        <div class="form-group formDiv">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+
+    </form>
+</div>
+
+<%- include('partials/footer') %>
