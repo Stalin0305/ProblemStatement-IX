@@ -5,6 +5,9 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var date=require('date-time');
 var shortid=require('shortid');
+// import alert from 'alert';
+// var popups=require('popups');
+var popup=require('node-popup');
 var dbs;
 var MongoClient=require('mongodb').MongoClient;
 var ObjectId= require('mongodb').ObjectID;
@@ -51,7 +54,7 @@ app.post('/xyz',function(req,res,next){
   var image=req.body.Prodimage;
   var body=req.body.Prodbody;
   console.log(image);
-  var obj={title: title,image: image,body: body,created: date()};
+  var obj={title: title,image: image,body: body,updated_on: date()};
   console.log(obj);
   dbs.collection('Products').insertOne(obj,function(e,r){
     // if(e) next(e);
@@ -66,21 +69,35 @@ app.get('/xyz/update',function(req,res){
 
 
 app.post('/xyz/update',function(req,res){
-  var editProdID=req.body.prodId;
+  var editProdID=req.body.IDproduct;
+  console.log(editProdID);
   res.redirect('/xyz/edit/'+editProdID);
 });
 
-app.get('/xyx/edit/:id',function(req,res){
+app.get('/xyz/edit/:id',function(req,res){
   var id=req.params.id;
   console.log(id);
-  dbs.collection('Products').findOne({_id: ObjectId(id)}).toArray(function(e,r){
+  dbs.collection('Products').findOne({_id: ObjectId(id)},function(e,r){
     if(e) console.log(e);
     if(r==null) 
     { console.log("Invalid id");}
     res.render("editForm",{product:r});
 
   });
-  
+
+
+});
+app.post('/xyz/edit', function (req, res,next) {
+  console.log("sgsgdgsg");
+  var id = req.body.Idprod;
+  var obj={ $set: {title: req.body.Prodtitle, image: req.body.Prodimage, body: req.body.Prodbody, updated_on: date()}};
+  dbs.collection('Products').updateOne({_id: ObjectId(id)},obj,function(e,r){
+    if(e) next(e);
+    console.log("Updated");
+    res.redirect("/xyz");
+  })
+  console.log(id);
+  res.end;
 })
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

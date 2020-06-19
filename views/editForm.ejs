@@ -1,1 +1,27 @@
-<h1>Finally <%=product%></h1>
+<%- include('partials/header') %>
+
+<div class="centerForm">
+    <form action="/xyz/edit" method="POST">
+        <input type="hidden" name="Idprod" value="<%=product._id%>">
+        <h2 class="formDiv">Update Product details</h2>
+        <div class="form-group formDiv">
+            <label for="titlexyz">Name of the Product</label>
+            <input type="text" class="form-control" id="titlexyz" name="Prodtitle" placeholder="Title" value="<%=product.title%>">
+        </div>
+        <div class="form-group formDiv">
+            <label for="imagexyz">Image url</label>
+            <input type="text" class="form-control" id="imagexyz" name="Prodimage"  placeholder="Image url" value="<%=product.image%>">
+        </div>
+        <div class="form-group formDiv">
+            <label for="bodyxyz">Description</label><br>
+            <!-- <input type="text" class="form-control" name="blogbody" id="bodyblog" maxlength="300"> -->
+            <textarea name="Prodbody" id="bodyblog" class="form-control" cols="30"  rows="7"><%=product.body%></textarea>
+        </div>
+        <div class="form-group formDiv">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+
+    </form>
+</div>
+
+<%- include('partials/footer') %>
