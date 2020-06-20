@@ -86,3 +86,11 @@ a.nav-link:hover{
 a.nav-link{
   transition: font-size 0.3s;
 }
+
+.alertBox{
+  margin: auto;
+  margin-top: 5vh;
+  /* border: 2px solid rgba(0,0,0,0.2); */
+  width: 30%;
+  text-align: center;
+}

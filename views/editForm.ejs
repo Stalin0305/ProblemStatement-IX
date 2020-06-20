@@ -1,5 +1,13 @@
 <%- include('partials/header') %>
 
+<% if(error=="yes"){%>
+<div class="alertBox">
+    <div class="alert alert-danger" role=alert>
+        Invalid id. Please enter a valid ID
+    </div>
+    <a href="/xyz/update" class="btn btn-primary">Try again</a>
+</div>
+<%} else{%>
 <div class="centerForm">
     <form action="/xyz/edit" method="POST">
         <input type="hidden" name="Idprod" value="<%=product._id%>">
@@ -23,5 +31,6 @@
 
     </form>
 </div>
+<%}%>
 
 <%- include('partials/footer') %>

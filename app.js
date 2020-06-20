@@ -69,24 +69,27 @@ app.get('/xyz/update',function(req,res){
 
 
 app.post('/xyz/update',function(req,res){
-  var editProdID=req.body.IDproduct;
-  console.log(editProdID);
-  res.redirect('/xyz/edit/'+editProdID);
-});
-
-app.get('/xyz/edit/:id',function(req,res){
-  var id=req.params.id;
+  var id=req.body.IDproduct;
   console.log(id);
-  dbs.collection('Products').findOne({_id: ObjectId(id)},function(e,r){
-    if(e) console.log(e);
-    if(r==null) 
-    { console.log("Invalid id");}
-    res.render("editForm",{product:r});
-
+  dbs.collection('Products').findOne({ _id: ObjectId(id) }, function (e, r) {
+    if (e) console.log(e);
+    if (r == null) { res.render('editForm',{error :"yes"}) };
+    console.log(r);
+    res.render("editForm", { product: r,error :"null" });
   });
-
-
 });
+
+// app.get('/xyz/edit/:id',function(req,res){
+//   var id=req.params.id;
+//   console.log(id);
+//   dbs.collection('Products').findOne({_id: ObjectId(id)},function(e,r){
+//     if(e) console.log(e);
+//     if(r==null) 
+//     { console.log("Invalid id");}
+//     res.render("editForm",{product:r});
+
+//   });
+
 app.post('/xyz/edit', function (req, res,next) {
   console.log("sgsgdgsg");
   var id = req.body.Idprod;
@@ -96,6 +99,26 @@ app.post('/xyz/edit', function (req, res,next) {
     console.log("Updated");
     res.redirect("/xyz");
   })
+  console.log(id);
+  res.end;
+});
+
+app.get('/xyz/show',function(req,res){
+  dbs.collection('Products').find().toArray(function(e,r){
+    if(e) next(e);
+    if(r==null){
+      console.log("Empty");
+    }
+    res.render('ShowProducts',{product:r});
+  })
+});
+
+app.get('/xyz/delete',function(req,res){
+  res.render('deletePage')
+});
+
+app.post('/xyz/remove',function(req,res){
+  var id = req.body.IDproduct;
   console.log(id);
   res.end;
 })
